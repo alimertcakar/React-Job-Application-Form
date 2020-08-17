@@ -46,7 +46,7 @@ function ApplicationForm() {
           <Grid item className={cls.textfield}>
             <TextField
               fullWidth
-              placeholder="First Name"
+              placeholder="John"
               label="First Name"
               variant="outlined"
               InputProps={{
@@ -62,7 +62,7 @@ function ApplicationForm() {
             <TextField
               fullWidth
               label="Surname"
-              placeholder="Surname"
+              placeholder="Doe"
               variant="outlined"
             />
           </Grid>
