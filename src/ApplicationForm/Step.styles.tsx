@@ -1,13 +1,23 @@
 import { makeStyles } from "@material-ui/core";
 
 export default makeStyles((theme) => ({
-  step1: { color: "red" },
   formControl: {
     width: "99%",
+    paddingTop: theme.spacing(2),
   },
   textfield: {
-    marginTop: theme.spacing(1),
     flexGrow: 1,
-    marginRight: theme.spacing(1),
+  },
+  paper: {
+    borderRadius: 0,
+    padding: theme.spacing(2),
+  },
+  paperGender: {
+    borderRadius: 0,
+    padding: theme.spacing(2),
+    paddingBottom: 0,
+  },
+  gender: {
+    paddingLeft: theme.spacing(2),
   },
 }));
