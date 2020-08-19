@@ -13,8 +13,9 @@ function App() {
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <Container>
-        <Stepper />
         <FormHeader />
+
+        <Stepper />
       </Container>
     </ThemeProvider>
   );

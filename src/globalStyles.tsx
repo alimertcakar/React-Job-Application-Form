@@ -2,6 +2,20 @@ import { createMuiTheme } from "@material-ui/core/styles";
 
 const theme = createMuiTheme({
   overrides: {
+    MuiStepIcon: {
+      root: {
+        color: "#35d3f2 !important",
+      },
+    },
+    MuiButton: {
+      root: {
+        backgroundColor: "#35d3f2 !important",
+        borderRadius: "0 !important",
+      },
+      text: {
+        color: "black !important",
+      },
+    },
     MuiCssBaseline: {
       "@global": {
         html: {

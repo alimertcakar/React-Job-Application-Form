@@ -20,9 +20,6 @@ export default function FormHeader({}: Props): ReactElement {
     <Grid container justify="center" className={cls.formHeaderContainer}>
       <Grid item xs={12} sm={12} md={8}>
         <h1 className={cls.formHeadline}>Apply as an employee</h1>
-        <Typography component="h1" className={cls.formHeaderDesc}>
-          Please fill the form below to apply for a position with us
-        </Typography>
       </Grid>
     </Grid>
   );
