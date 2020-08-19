@@ -11,6 +11,8 @@ import useFormStyles from "./Form.styles";
 
 import Typography from "@material-ui/core/Typography";
 import Step1 from "./Step1";
+import Step2 from "./Step2";
+import Step3 from "./Step3";
 
 const useStyles = makeStyles((theme) => ({
   button: {
@@ -37,9 +39,9 @@ function getStepContent(step: number) {
     case 0:
       return <Step1 />;
     case 1:
-      return;
+      return <Step2 />;
     case 2:
-      return;
+      return <Step3 />;
     default:
       return "Unknown step";
   }
@@ -49,7 +51,6 @@ export default function HorizontalNonLinearAlternativeLabelStepper() {
   const classes = useStyles();
   const [activeStep, setActiveStep] = React.useState(0);
   const [completed, setCompleted] = React.useState(new Set());
-  const [skipped, setSkipped] = React.useState(new Set());
   const steps = getSteps();
   const cls = useFormStyles();
 
@@ -57,35 +58,12 @@ export default function HorizontalNonLinearAlternativeLabelStepper() {
     return getSteps().length;
   };
 
-  const isStepOptional = (step: number) => {
-    return step === 1;
-  };
-
-  const handleSkip = () => {
-    if (!isStepOptional(activeStep)) {
-      // You probably want to guard against something like this
-      // it should never occur unless someone's actively trying to break something.
-      throw new Error("You can't skip a step that isn't optional.");
-    }
-
-    setActiveStep((prevActiveStep) => prevActiveStep + 1);
-    setSkipped((prevSkipped) => {
-      const newSkipped = new Set(prevSkipped.values());
-      newSkipped.add(activeStep);
-      return newSkipped;
-    });
-  };
-
-  const skippedSteps = () => {
-    return skipped.size;
-  };
-
   const completedSteps = () => {
     return completed.size;
   };
 
   const allStepsCompleted = () => {
-    return completedSteps() === totalSteps() - skippedSteps();
+    return completedSteps() === totalSteps();
   };
 
   const isLastStep = () => {
@@ -121,19 +99,9 @@ export default function HorizontalNonLinearAlternativeLabelStepper() {
      * `if (!this.allStepsComplete())` however state is not set when we do this,
      * thus we have to resort to not being very DRY.
      */
-    if (completed.size !== totalSteps() - skippedSteps()) {
+    if (completed.size !== totalSteps()) {
       handleNext();
     }
-  };
-
-  const handleReset = () => {
-    setActiveStep(0);
-    setCompleted(new Set());
-    setSkipped(new Set());
-  };
-
-  const isStepSkipped = (step: number) => {
-    return skipped.has(step);
   };
 
   function isStepComplete(step: number) {
@@ -154,14 +122,6 @@ export default function HorizontalNonLinearAlternativeLabelStepper() {
             const stepProps: stepProps = {};
             const buttonProps: buttonProps = {};
 
-            if (isStepOptional(index)) {
-              buttonProps.optional = (
-                <Typography variant="caption">Partly Optional</Typography>
-              );
-            }
-            if (isStepSkipped(index)) {
-              stepProps.completed = false;
-            }
             return (
               <Step key={label} {...stepProps}>
                 <StepButton
@@ -177,45 +137,28 @@ export default function HorizontalNonLinearAlternativeLabelStepper() {
         </Stepper>
         <div>
           <Typography component="h1" className={cls.formHeaderDesc}>
-            Please fill the form below to apply for a position with us
+            Please fill this form to apply for a position with us
           </Typography>
           {allStepsCompleted() ? (
             <div>
               <Typography className={classes.instructions}>
-                All steps completed - you&apos;re finished
+                Thanks for applying!
               </Typography>
-              <Button onClick={handleReset}>Reset</Button>
             </div>
           ) : (
             <div>
               {getStepContent(activeStep)}
-              <Paper>
+              <Paper className={cls.bottomButtons}>
                 <Grid container justify="flex-end">
                   <Button
                     disabled={activeStep === 0}
                     onClick={handleBack}
                     className={classes.button}
+                    disableElevation
+                    style={{ backgroundColor: "#fff!important" }}
                   >
                     Back
                   </Button>
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    onClick={handleNext}
-                    className={classes.button}
-                  >
-                    Next
-                  </Button>
-                  {isStepOptional(activeStep) && !completed.has(activeStep) && (
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      onClick={handleSkip}
-                      className={classes.button}
-                    >
-                      Skip
-                    </Button>
-                  )}
 
                   {activeStep !== steps.length &&
                     (completed.has(activeStep) ? (
@@ -223,13 +166,20 @@ export default function HorizontalNonLinearAlternativeLabelStepper() {
                         variant="caption"
                         className={classes.completed}
                       >
-                        Step {activeStep + 1} already completed
+                        <Button
+                          onClick={handleNext}
+                          className={classes.button}
+                          disableElevation
+                        >
+                          Next
+                        </Button>
                       </Typography>
                     ) : (
                       <Button
                         variant="contained"
                         color="primary"
                         onClick={handleComplete}
+                        disableElevation
                       >
                         {completedSteps() === totalSteps() - 1
                           ? "Finish"

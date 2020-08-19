@@ -20,4 +20,10 @@ export default makeStyles((theme) => ({
   gender: {
     paddingLeft: theme.spacing(2),
   },
+  phoneNumber: {
+    marginTop: theme.spacing(2),
+  },
+  message: {
+    marginTop: theme.spacing(2),
+  },
 }));

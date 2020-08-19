@@ -24,8 +24,8 @@ function ApplicationForm() {
       <Paper elevation={0} className={cls.paper}>
         <TextField
           fullWidth
-          placeholder=""
-          label="First Name"
+          placeholder="John Hoe"
+          label="Name"
           variant="outlined"
           InputProps={{
             startAdornment: (
@@ -34,14 +34,6 @@ function ApplicationForm() {
               </InputAdornment>
             ),
           }}
-        />
-      </Paper>
-      <Paper elevation={0} className={cls.paper}>
-        <TextField
-          fullWidth
-          label="Surname"
-          placeholder="Doe"
-          variant="outlined"
         />
       </Paper>
       <Paper className={cls.paperGender}>

@@ -13,7 +13,7 @@ const theme = createMuiTheme({
         borderRadius: "0 !important",
       },
       text: {
-        color: "black !important",
+        color: "white !important",
       },
     },
     MuiCssBaseline: {

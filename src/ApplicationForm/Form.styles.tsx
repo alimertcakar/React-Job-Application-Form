@@ -15,4 +15,8 @@ export default makeStyles((theme) => ({
     paddingBottom: theme.spacing(2),
   },
   formHeaderContainer: {},
+  bottomButtons: {
+    borderRadius: 0,
+    paddingTop: theme.spacing(8),
+  },
 }));
