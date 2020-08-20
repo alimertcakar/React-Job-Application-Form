@@ -21,7 +21,7 @@ export default makeStyles((theme) => ({
     paddingLeft: theme.spacing(2),
   },
   phoneNumber: {
-    marginTop: theme.spacing(2),
+    marginTop: theme.spacing(6),
   },
   message: {
     marginTop: theme.spacing(2),

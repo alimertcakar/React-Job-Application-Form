@@ -6,7 +6,7 @@ import StepButton from "@material-ui/core/StepButton";
 import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
-
+import { useForm } from "react-hook-form";
 import useFormStyles from "./Form.styles";
 
 import Typography from "@material-ui/core/Typography";
@@ -53,7 +53,8 @@ export default function HorizontalNonLinearAlternativeLabelStepper() {
   const [completed, setCompleted] = React.useState(new Set());
   const steps = getSteps();
   const cls = useFormStyles();
-
+  const { handleSubmit, register, errors } = useForm();
+  const onSendForm = (val: object) => console.log(val);
   const totalSteps = () => {
     return getSteps().length;
   };
@@ -71,6 +72,7 @@ export default function HorizontalNonLinearAlternativeLabelStepper() {
   };
 
   const handleNext = () => {
+    if (isLastStep()) return;
     const newActiveStep =
       isLastStep() && !allStepsCompleted()
         ? // It's the last step, but not all steps have been completed
@@ -94,11 +96,6 @@ export default function HorizontalNonLinearAlternativeLabelStepper() {
     newCompleted.add(activeStep);
     setCompleted(newCompleted);
 
-    /**
-     * Sigh... it would be much nicer to replace the following if conditional with
-     * `if (!this.allStepsComplete())` however state is not set when we do this,
-     * thus we have to resort to not being very DRY.
-     */
     if (completed.size !== totalSteps()) {
       handleNext();
     }
@@ -139,18 +136,13 @@ export default function HorizontalNonLinearAlternativeLabelStepper() {
           <Typography component="h1" className={cls.formHeaderDesc}>
             Please fill this form to apply for a position with us
           </Typography>
-          {allStepsCompleted() ? (
-            <div>
-              <Typography className={classes.instructions}>
-                Thanks for applying!
-              </Typography>
-            </div>
-          ) : (
-            <div>
+          <div>
+            <form onSubmit={handleSubmit(onSendForm)}>
               {getStepContent(activeStep)}
               <Paper className={cls.bottomButtons}>
                 <Grid container justify="flex-end">
                   <Button
+                    type="button"
                     disabled={activeStep === 0}
                     onClick={handleBack}
                     className={classes.button}
@@ -166,18 +158,23 @@ export default function HorizontalNonLinearAlternativeLabelStepper() {
                         variant="caption"
                         className={classes.completed}
                       >
-                        <Button
-                          onClick={handleNext}
-                          className={classes.button}
-                          disableElevation
-                        >
-                          Next
-                        </Button>
+                        {" "}
+                        {!isLastStep() && (
+                          <Button
+                            type="button"
+                            onClick={handleNext}
+                            className={classes.button}
+                            disableElevation
+                          >
+                            Next
+                          </Button>
+                        )}
                       </Typography>
                     ) : (
                       <Button
                         variant="contained"
                         color="primary"
+                        type="submit"
                         onClick={handleComplete}
                         disableElevation
                       >
@@ -188,8 +185,8 @@ export default function HorizontalNonLinearAlternativeLabelStepper() {
                     ))}
                 </Grid>
               </Paper>
-            </div>
-          )}
+            </form>
+          </div>
         </div>
       </Grid>
     </Grid>
