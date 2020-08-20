@@ -9,7 +9,7 @@ function ApplicationForm() {
   return (
     <div>
       <Paper elevation={0} className={cls.paper}>
-        <Typography>Any last words?</Typography>
+        <Typography>Anything to add?</Typography>
         <TextField
           className={cls.message}
           fullWidth
